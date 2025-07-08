@@ -1,42 +1,54 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Summarize Anything - Results</title>
+  <title>Summarize Anything</title>
   <style>
     body {
-      font-family: sans-serif;
-      padding: 2em;
-      background: #f5f5f5;
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f8f8f8;
+      color: #333;
     }
     .summary-box {
       background: white;
-      padding: 1em;
+      padding: 1.5rem;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
     }
-    .button {
-      margin-top: 20px;
-      display: inline-block;
-      padding: 0.6em 1.2em;
-      background: #4f46e5;
+    button {
+      background: #007bff;
       color: white;
-      border-radius: 5px;
-      text-decoration: none;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
     }
   </style>
 </head>
 <body>
-  <h1>Your Summary</h1>
-  <div class="summary-box" id="summary">Loading summary...</div>
+  <h1>Here's your summary:</h1>
+  <div class="summary-box" id="summaryBox">Loading...</div>
 
-  <a class="button" href="https://tally.so/r/yourformid">Summarize Again</a>
+  <button onclick="window.location.href='https://tally.so/r/your-form-id'">Summarize Again</button>
 
   <script>
+    // Extract summary from URL
     const urlParams = new URLSearchParams(window.location.search);
     const summary = urlParams.get('summary');
-    document.getElementById('summary').textContent = summary || "No summary found.";
+
+    // Decode and display it
+    const summaryBox = document.getElementById('summaryBox');
+    if (summary) {
+      summaryBox.textContent = decodeURIComponent(summary);
+    } else {
+      summaryBox.textContent = "No summary found.";
+    }
   </script>
 </body>
 </html>
-
