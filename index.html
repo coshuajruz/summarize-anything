@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Summarize Anything - Result</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 40px;
+      text-align: center;
+    }
+    #summary {
+      background: #fff;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 8px;
+      max-width: 600px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      white-space: pre-wrap;
+    }
+    .button {
+      margin-top: 20px;
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+    }
+    .button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Your Summary</h1>
+  <div id="summary">Loading summary...</div>
+  <a href="https://tally.so/r/wQ9rlk" class="button">Summarize Again</a>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const summary = params.get("summary");
+    document.getElementById("summary").textContent = summary ? decodeURIComponent(summary) : "No summary found.";
+  </script>
+</body>
+</html>
