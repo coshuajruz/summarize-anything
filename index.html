@@ -1,54 +1,87 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Summarize Anything</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Summary</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 2rem;
-      background: #f8f8f8;
+      padding: 40px;
+      background-color: #f4f4f4;
       color: #333;
+      text-align: center;
     }
-    .summary-box {
+    .box {
       background: white;
-      padding: 1.5rem;
-      border-radius: 8px;
+      padding: 20px;
+      border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      margin-bottom: 2rem;
+      display: inline-block;
+      max-width: 700px;
     }
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
+    .summary {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      word-wrap: break-word;
+    }
+    select, button {
+      padding: 10px;
+      margin-top: 10px;
       border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0056b3;
+      border: 1px solid #ccc;
+      font-size: 1em;
     }
   </style>
 </head>
 <body>
-  <h1>Here's your summary:</h1>
-  <div class="summary-box" id="summaryBox">Loading...</div>
+  <div class="box">
+    <h1>Your Summary</h1>
+    <div class="summary" id="summary">Loading...</div>
 
-  <button onclick="window.location.href='https://tally.so/r/your-form-id'">Summarize Again</button>
+    <label for="format">Choose a format:</label>
+    <select id="format">
+      <option value="default">Default</option>
+      <option value="bullets">Bullet Points</option>
+      <option value="simple">Explain Like I'm 5</option>
+    </select>
+
+    <div>
+      <button onclick="window.location.href='https://tally.so/r/wQ9rIk'">Summarize Again</button>
+    </div>
+  </div>
 
   <script>
-    // Extract summary from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const summary = urlParams.get('summary');
+    const params = new URLSearchParams(window.location.search);
+    const rawSummary = params.get("summary");
 
-    // Decode and display it
-    const summaryBox = document.getElementById('summaryBox');
-    if (summary) {
-      summaryBox.textContent = decodeURIComponent(summary);
-    } else {
+    const summaryBox = document.getElementById("summary");
+    const formatDropdown = document.getElementById("format");
+
+    if (!rawSummary) {
       summaryBox.textContent = "No summary found.";
+    } else {
+      const decoded = decodeURIComponent(rawSummary);
+      summaryBox.textContent = decoded;
+
+      formatDropdown.addEventListener("change", () => {
+        let output = decoded;
+
+        switch (formatDropdown.value) {
+          case "bullets":
+            output = "• " + decoded.replace(/\. /g, ".\n• ");
+            break;
+          case "simple":
+            output = "Imagine you're 5. Here's the summary:\n\n" + decoded;
+            break;
+          default:
+            output = decoded;
+        }
+
+        summaryBox.textContent = output;
+      });
     }
   </script>
 </body>
 </html>
+
